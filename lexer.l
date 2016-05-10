@@ -1,5 +1,6 @@
 %{
 #include <iostream>
+#include "TokenType.h"
 using namespace std;
 int mylineno = 0;
 %}
@@ -7,25 +8,8 @@ int mylineno = 0;
 %option noyywrap
 
 ws      [ \t]+
-
 name    [a-zA-Z_]([a-zA-Z0-9_])*
 number  [1-9]*[0-9]
-lp_operator [+\-]
-hp_operator [*/]
-conditional_operator (==)|(!=)|(<=)|(>=)|<|>
-assignment =
-separator ,
-open_index_bracket \[
-close_index_bracket \]
-sublist :
-open_list_bracket {
-close_list_bracket }
-open_bracket (
-close_bracket )
-if if
-else else
-foreach foreach
-end end
 
 %%
 
@@ -45,14 +29,35 @@ end end
     }
 }
 
-{name}    cout << "name " << YYText() << '\n';
-{number}  cout << "number " << YYText() << '\n';
-{lp_operator}  cout << "lp_operator " << YYText() << '\n';
-{hp_operator}  cout << "hp_operator " << YYText() << '\n';
-{conditional_operator}  cout << "conditional_operator " << YYText() << '\n';
-{assignment}  cout << "assignment " << YYText() << '\n';
-{separator}  cout << "separator " << YYText() << '\n';
-\n        mylineno++;
+"if"        return TokenType::If;
+"else"      return TokenType::Else;
+"foreach"   return TokenType::Foreach;
+"end"       return TokenType::End;
+"filter"    return TokenType::Filter;
+"size"      return TokenType::Size;
+"sort"      return TokenType::Sort;
+{name}      return TokenType::Name;
+{number}    return TokenType::Number;
+"+"         return TokenType::Plus;
+"-"         return TokenType::Minus;
+"*"         return TokenType::Multiply;
+"/"         return TokenType::Divide;
+"="         return TokenType::Assignment;
+"=="        return TokenType::Equality;
+"!="        return TokenType::Inequality;
+">="        return TokenType::GreaterOrEqual;
+"<="        return TokenType::LessOrEqual;
+"<"         return TokenType::Less;
+">"         return TokenType::Greater;
+","         return TokenType::Separator;
+"{"         return TokenType::OpenListBracket;
+"}"         return TokenType::CloseListBracket;
+"["         return TokenType::OpenIndexBracket;
+"]"         return TokenType::CloseIndexBracket;
+":"         return TokenType::Sublist;
+"("         return TokenType::OpenBracket;
+")"         return TokenType::CloseBracket;
+\n          mylineno++;
 
 
 %%
