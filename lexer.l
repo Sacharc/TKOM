@@ -36,6 +36,7 @@ number  [1-9]*[0-9]
 "filter"    return TokenType::Filter;
 "size"      return TokenType::Size;
 "sort"      return TokenType::Sort;
+"function"  return TokenType::Function;
 {name}      return TokenType::Name;
 {number}    return TokenType::Number;
 "+"         return TokenType::Plus;

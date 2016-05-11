@@ -38,6 +38,7 @@ enum TokenType {
     Minus,
     Multiply,
     Divide,
+    Function,
 };
 
 inline std::string getTokenName(int token) {
@@ -72,6 +73,7 @@ inline std::string getTokenName(int token) {
         case Minus:             return "Minus";
         case Multiply:          return "Multiply";
         case Divide:            return "Divide";
+        case Function:          return "Function";
         default:                return "";
     }
 }
